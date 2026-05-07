@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Playfair_Display, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Rickny Sanon - AI Software Engineer & Full-Stack Developer",
+  title: "Rickny Sanon — AI Software Engineer & Full-Stack Developer",
   description:
     "Professional portfolio of Rickny Sanon, AI Software Engineer and Full-Stack Developer. Computer Science student at FIU specializing in AI/ML, web development, and cloud technologies.",
   keywords: [
@@ -19,11 +30,9 @@ export const metadata: Metadata = {
     "Machine Learning",
     "Miami",
   ],
-  authors: [
-    { name: "Rickny Sanon", url: "https://linkedin.com/in/sanonrickny" },
-  ],
+  authors: [{ name: "Rickny Sanon", url: "https://linkedin.com/in/sanonrickny" }],
   openGraph: {
-    title: "Rickny Sanon - AI Software Engineer & Full-Stack Developer",
+    title: "Rickny Sanon — AI Software Engineer & Full-Stack Developer",
     description:
       "Professional portfolio showcasing AI/ML projects, full-stack development, and innovative solutions.",
     url: "https://ricknysanon.dev",
@@ -32,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rickny Sanon - AI Software Engineer & Full-Stack Developer",
+    title: "Rickny Sanon — AI Software Engineer & Full-Stack Developer",
     description:
       "Professional portfolio showcasing AI/ML projects, full-stack development, and innovative solutions.",
   },
@@ -45,8 +54,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
-        <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
+      <body className={`${playfair.variable} ${dmSans.variable} antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
