@@ -57,6 +57,38 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+/* ── Logo Styling ─────────────────────────────────────── */
+.logo-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;
+  line-height: 1;
+}
+
+.logo-text .initial {
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: color 0.2s ease;
+}
+
+.logo-text .initial:first-child {
+  color: var(--accent);
+}
+
+.logo-text .initial:last-child {
+  color: var(--text-primary);
+}
+
+.logo-text:hover .initial:first-child {
+  color: var(--accent-light);
+}
+
+.logo-text:hover .initial:last-child {
+  color: var(--accent);
+}
+
 /* ── Cards ────────────────────────────────────────────── */
 .card {
   background: var(--card);

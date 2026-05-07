@@ -59,13 +59,18 @@ export default function Home() {
       {/* ── Navigation ──────────────────────────────── */}
       <nav className="fixed top-0 w-full glass-nav z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/"
-            className="font-display text-xl font-bold"
-            style={{ color: "var(--text-primary)" }}
-          >
-            R.S.
-          </Link>
+<Link
+  href="/"
+  className="logo-text font-display"
+  style={{ color: "var(--text-primary)" }}
+>
+  <span className="initial" aria-hidden="true">
+    R
+  </span>
+  <span className="initial" aria-hidden="true">
+    S
+  </span>
+</Link>
 
           <div className="hidden md:flex items-center gap-8">
             {["About", "Experience", "Projects", "Contact"].map((item) => (

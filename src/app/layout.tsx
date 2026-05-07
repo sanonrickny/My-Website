@@ -45,6 +45,13 @@ export const metadata: Metadata = {
     description:
       "Professional portfolio showcasing AI/ML projects, full-stack development, and innovative solutions.",
   },
+  icons: [
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      url: "/favicon.svg"
+    }
+  ]
 };
 
 export default function RootLayout({
