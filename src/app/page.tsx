@@ -201,9 +201,9 @@ export default function Home() {
               className="max-w-md leading-relaxed mb-10 text-sm md:text-base"
               style={{ color: "var(--text-secondary)" }}
             >
-              CS student at Florida International University building AI-powered
-              solutions and scalable web applications. Passionate about the
-              intersection of machine learning and elegant software.
+              Software Engineer building AI-powered solutions and scalable web
+              applications. Passionate about the intersection of machine
+              learning and elegant software.
             </motion.p>
 
             <motion.div
@@ -401,9 +401,8 @@ export default function Home() {
                   className="leading-relaxed"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  I&apos;m a Computer Science student at Florida International
-                  University with a 3.6 GPA, passionate about leveraging AI and
-                  modern technologies to create impactful solutions. My
+                  I&apos;m a Software Engineer passionate about leveraging AI
+                  and modern technologies to create impactful solutions. My
                   experience spans from AI/ML engineering to full-stack web
                   development, with hands-on experience at companies like Ebix
                   and Zinnia.

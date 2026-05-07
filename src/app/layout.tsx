@@ -19,7 +19,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Rickny Sanon — AI Software Engineer & Full-Stack Developer",
   description:
-    "Professional portfolio of Rickny Sanon, AI Software Engineer and Full-Stack Developer. Computer Science student at FIU specializing in AI/ML, web development, and cloud technologies.",
+    "Professional portfolio of Rickny Sanon, AI Software Engineer and Full-Stack Developer specializing in AI/ML, web development, and cloud technologies.",
   keywords: [
     "Rickny Sanon",
     "Software Engineer",
