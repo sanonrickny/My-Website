@@ -7,7 +7,6 @@ import {
   Mail,
   ExternalLink,
   MapPin,
-  Phone,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-provider";
@@ -244,10 +243,6 @@ export default function Home() {
               <span className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5" />
                 Miami, FL
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5" />
-                786-705-0057
               </span>
             </motion.div>
           </motion.div>
@@ -932,7 +927,6 @@ export default function Home() {
                       label: "sanonrickny2@gmail.com",
                       href: "mailto:sanonrickny2@gmail.com",
                     },
-                    { Icon: Phone, label: "786-705-0057", href: null },
                     { Icon: MapPin, label: "Miami, FL", href: null },
                   ].map(({ Icon, label, href }) => (
                     <div
