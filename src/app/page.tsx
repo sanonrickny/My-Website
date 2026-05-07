@@ -1,12 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import {
   Github,
   Linkedin,
   Mail,
   ExternalLink,
   MapPin,
+  Copy,
+  Check,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-provider";
@@ -53,6 +56,15 @@ function SectionLabel({ num, title }: { num: string; title: string }) {
 
 /* ── Main Page ──────────────────────────────────────── */
 export default function Home() {
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  function copyEmail() {
+    navigator.clipboard.writeText("sanonrickny2@gmail.com").then(() => {
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    });
+  }
+
   return (
     <main style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}>
       {/* ── Navigation ──────────────────────────────── */}
@@ -926,9 +938,10 @@ export default function Home() {
                       Icon: Mail,
                       label: "sanonrickny2@gmail.com",
                       href: "mailto:sanonrickny2@gmail.com",
+                      copyable: true,
                     },
-                    { Icon: MapPin, label: "Miami, FL", href: null },
-                  ].map(({ Icon, label, href }) => (
+                    { Icon: MapPin, label: "Miami, FL", href: null, copyable: false },
+                  ].map(({ Icon, label, href, copyable }) => (
                     <div
                       key={label}
                       className="flex items-center gap-4"
@@ -964,6 +977,25 @@ export default function Home() {
                         </Link>
                       ) : (
                         <span className="text-sm">{label}</span>
+                      )}
+                      {copyable && (
+                        <button
+                          onClick={copyEmail}
+                          title="Copy email"
+                          className="flex items-center justify-center w-7 h-7 rounded-lg transition-colors duration-200"
+                          style={{
+                            background: "var(--card)",
+                            border: "1px solid var(--border)",
+                            color: emailCopied ? "var(--accent)" : "var(--text-muted)",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {emailCopied ? (
+                            <Check className="w-3.5 h-3.5" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
                       )}
                     </div>
                   ))}
