@@ -163,7 +163,7 @@ export default function Home() {
             width: "300px",
             height: "300px",
             borderRadius: "50%",
-            background: "#6d7cff",
+            background: "var(--tint-blue)",
             opacity: 0.03,
             filter: "blur(80px)",
           }}
@@ -179,18 +179,24 @@ export default function Home() {
           >
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-3 mb-10"
+              className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full text-xs tracking-[0.18em] uppercase font-medium"
+              style={{
+                border: "1px solid var(--border)",
+                background: "var(--card)",
+                color: "var(--accent)",
+              }}
             >
-              <div
-                className="h-px w-8"
-                style={{ background: "var(--accent)" }}
-              />
-              <span
-                className="text-xs tracking-[0.28em] uppercase font-medium"
-                style={{ color: "var(--accent)" }}
-              >
-                Portfolio · 2025
+              <span className="relative flex h-2 w-2">
+                <span
+                  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+                  style={{ background: "var(--tint-green)" }}
+                />
+                <span
+                  className="relative inline-flex rounded-full h-2 w-2"
+                  style={{ background: "var(--tint-green)" }}
+                />
               </span>
+              Open to new opportunities
             </motion.div>
 
             <motion.h1
@@ -246,11 +252,7 @@ export default function Home() {
               <Link
                 href="https://linkedin.com/in/sanonrickny"
                 target="_blank"
-                className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: "var(--accent)",
-                  boxShadow: "0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent)",
-                }}
+                className="btn-primary flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium"
               >
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
@@ -258,22 +260,7 @@ export default function Home() {
               <Link
                 href="https://github.com/sanonrickny"
                 target="_blank"
-                className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.borderColor = "var(--accent)";
-                  el.style.color = "var(--accent)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.borderColor = "var(--border)";
-                  el.style.color = "var(--text-primary)";
-                }}
+                className="btn-outline flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium"
               >
                 <Github className="w-4 h-4" />
                 GitHub
