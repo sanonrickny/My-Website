@@ -10,8 +10,14 @@ import {
   MapPin,
   Copy,
   Check,
+  Menu,
+  X,
+  Bot,
+  Zap,
+  Cloud,
+  BarChart3,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-provider";
 import { TypewriterEffect } from "@/components/typewriter-effect";
 
@@ -55,55 +61,97 @@ function SectionLabel({ num, title }: { num: string; title: string }) {
 }
 
 /* ── Main Page ──────────────────────────────────────── */
+const NAV_LINKS = ["About", "Experience", "Projects", "Contact"];
+
 export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  function copyEmail() {
-    navigator.clipboard.writeText("sanonrickny2@gmail.com").then(() => {
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2000);
-    });
+  async function copyEmail() {
+    const email = "sanonrickny2@gmail.com";
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      // Fallback for contexts where the Clipboard API is unavailable
+      const ta = document.createElement("textarea");
+      ta.value = email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
   }
 
   return (
+    <MotionConfig reducedMotion="user">
     <main style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}>
       {/* ── Navigation ──────────────────────────────── */}
       <nav className="fixed top-0 w-full glass-nav z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-<Link
-  href="/"
-  className="logo-text font-display"
-  style={{ color: "var(--text-primary)" }}
->
-  <span className="initial" aria-hidden="true">
-    R
-  </span>
-  <span className="initial" aria-hidden="true">
-    S
-  </span>
-</Link>
+          <Link
+            href="/"
+            className="logo-text font-display"
+            style={{ color: "var(--text-primary)" }}
+          >
+            <span className="initial" aria-hidden="true">
+              R
+            </span>
+            <span className="initial" aria-hidden="true">
+              S
+            </span>
+            <span className="sr-only">Rickny Sanon — home</span>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {["About", "Experience", "Projects", "Contact"].map((item) => (
-              <Link
+            {NAV_LINKS.map((item) => (
+              // ponytail: plain <a> for same-page hash links — Next Link's
+              // scroll handling breaks when onClick unmounts the element
+              <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-sm tracking-wide transition-colors duration-200"
-                style={{ color: "var(--text-secondary)" }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--accent)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--text-secondary)")
-                }
+                className="link-nav text-sm tracking-wide"
               >
                 {item}
-              </Link>
+              </a>
             ))}
           </div>
 
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="icon-btn md:hidden w-10 h-10 rounded-full flex items-center justify-center"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
+
+        {menuOpen && (
+          <div
+            className="md:hidden px-6 pb-5 flex flex-col gap-1"
+            style={{
+              borderTop: "1px solid var(--border)",
+              background: "var(--bg)",
+            }}
+          >
+            {NAV_LINKS.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className="link-nav py-3 text-sm tracking-wide"
+                style={{ borderBottom: "1px solid var(--border)" }}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        )}
       </nav>
 
       {/* ── Hero ────────────────────────────────────── */}
@@ -130,7 +178,7 @@ export default function Home() {
             width: "300px",
             height: "300px",
             borderRadius: "50%",
-            background: "#6d7cff",
+            background: "var(--tint-blue)",
             opacity: 0.03,
             filter: "blur(80px)",
           }}
@@ -146,18 +194,24 @@ export default function Home() {
           >
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-3 mb-10"
+              className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full text-xs tracking-[0.18em] uppercase font-medium"
+              style={{
+                border: "1px solid var(--border)",
+                background: "var(--card)",
+                color: "var(--accent)",
+              }}
             >
-              <div
-                className="h-px w-8"
-                style={{ background: "var(--accent)" }}
-              />
-              <span
-                className="text-xs tracking-[0.28em] uppercase font-medium"
-                style={{ color: "var(--accent)" }}
-              >
-                Portfolio · 2025
+              <span className="relative flex h-2 w-2">
+                <span
+                  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+                  style={{ background: "var(--tint-green)" }}
+                />
+                <span
+                  className="relative inline-flex rounded-full h-2 w-2"
+                  style={{ background: "var(--tint-green)" }}
+                />
               </span>
+              Open to new opportunities
             </motion.div>
 
             <motion.h1
@@ -213,11 +267,7 @@ export default function Home() {
               <Link
                 href="https://linkedin.com/in/sanonrickny"
                 target="_blank"
-                className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium text-white transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: "var(--accent)",
-                  boxShadow: "0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent)",
-                }}
+                className="btn-primary flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium"
               >
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
@@ -225,22 +275,7 @@ export default function Home() {
               <Link
                 href="https://github.com/sanonrickny"
                 target="_blank"
-                className="flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-0.5"
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid var(--border)",
-                  color: "var(--text-primary)",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.borderColor = "var(--accent)";
-                  el.style.color = "var(--accent)";
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget as HTMLAnchorElement;
-                  el.style.borderColor = "var(--border)";
-                  el.style.color = "var(--text-primary)";
-                }}
+                className="btn-outline flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium"
               >
                 <Github className="w-4 h-4" />
                 GitHub
@@ -518,7 +553,7 @@ export default function Home() {
               {[
                 {
                   title: "Languages & Frameworks",
-                  dot: "#c9a96e",
+                  dot: "var(--accent)",
                   tags: [
                     "Python",
                     "Java",
@@ -533,7 +568,7 @@ export default function Home() {
                 },
                 {
                   title: "AI & Dev Tools",
-                  dot: "#7b9cff",
+                  dot: "var(--tint-blue)",
                   tags: [
                     "Claude LLM",
                     "AWS Bedrock",
@@ -547,7 +582,7 @@ export default function Home() {
                 },
                 {
                   title: "Cloud & Databases",
-                  dot: "#6ee7b7",
+                  dot: "var(--tint-green)",
                   tags: [
                     "AWS",
                     "SQLite",
@@ -590,16 +625,21 @@ export default function Home() {
               className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4"
             >
               {[
-                { icon: "🤖", title: "AI & Machine Learning", sub: "LLMs, NLP, PyTorch" },
-                { icon: "⚡", title: "Full-Stack Dev", sub: "React, Flask, APIs" },
-                { icon: "☁️", title: "Cloud & DevOps", sub: "AWS, Docker" },
-                { icon: "📊", title: "Data & Analytics", sub: "SQL, Dashboards" },
-              ].map(({ icon, title, sub }) => (
+                { Icon: Bot, title: "AI & Machine Learning", sub: "LLMs, NLP, PyTorch" },
+                { Icon: Zap, title: "Full-Stack Dev", sub: "React, Flask, APIs" },
+                { Icon: Cloud, title: "Cloud & DevOps", sub: "AWS, Docker" },
+                { Icon: BarChart3, title: "Data & Analytics", sub: "SQL, Dashboards" },
+              ].map(({ Icon, title, sub }) => (
                 <div
                   key={title}
                   className="card rounded-xl p-5 text-center"
                 >
-                  <div className="text-2xl mb-3">{icon}</div>
+                  <div className="flex justify-center mb-3">
+                    <Icon
+                      className="w-6 h-6"
+                      style={{ color: "var(--accent)" }}
+                    />
+                  </div>
                   <h4
                     className="text-xs font-semibold mb-1"
                     style={{ color: "var(--text-primary)" }}
@@ -690,18 +730,7 @@ export default function Home() {
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-6">
                     <div>
-                      <h3
-                        className="font-display font-semibold text-lg transition-colors duration-200"
-                        style={{ color: "var(--text-primary)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-primary)")
-                        }
-                      >
+                      <h3 className="card-title font-display font-semibold text-lg">
                         {role}
                       </h3>
                       <p
@@ -824,18 +853,7 @@ export default function Home() {
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1 min-w-0">
-                      <h3
-                        className="font-display font-semibold text-lg transition-colors duration-200"
-                        style={{ color: "var(--text-primary)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-primary)")
-                        }
-                      >
+                      <h3 className="card-title font-display font-semibold text-lg">
                         {name}
                       </h3>
                       <p
@@ -855,16 +873,8 @@ export default function Home() {
                       <Link
                         href={link}
                         target="_blank"
-                        className="ml-4 flex-shrink-0 mt-0.5 transition-colors duration-200"
-                        style={{ color: "var(--text-muted)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-muted)")
-                        }
+                        className="link-muted ml-4 flex-shrink-0 mt-0.5"
+                        aria-label={`Open ${name} (new tab)`}
                       >
                         <ExternalLink className="w-5 h-5" />
                       </Link>
@@ -959,19 +969,7 @@ export default function Home() {
                         />
                       </div>
                       {href ? (
-                        <Link
-                          href={href}
-                          className="text-sm transition-colors duration-200"
-                          style={{ color: "var(--text-secondary)" }}
-                          onMouseEnter={(e) =>
-                            ((e.currentTarget as HTMLElement).style.color =
-                              "var(--accent)")
-                          }
-                          onMouseLeave={(e) =>
-                            ((e.currentTarget as HTMLElement).style.color =
-                              "var(--text-secondary)")
-                          }
-                        >
+                        <Link href={href} className="link-nav text-sm">
                           {label}
                         </Link>
                       ) : (
@@ -1013,22 +1011,7 @@ export default function Home() {
                       key={href}
                       href={href}
                       target={href.startsWith("mailto") ? undefined : "_blank"}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
-                      style={{
-                        background: "var(--card)",
-                        border: "1px solid var(--border)",
-                        color: "var(--text-secondary)",
-                      }}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.borderColor = "var(--accent)";
-                        el.style.color = "var(--accent)";
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.borderColor = "var(--border)";
-                        el.style.color = "var(--text-secondary)";
-                      }}
+                      className="icon-btn w-10 h-10 rounded-xl flex items-center justify-center"
                     >
                       <Icon className="w-4 h-4" />
                     </Link>
@@ -1045,7 +1028,7 @@ export default function Home() {
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Full-time Software Engineering roles starting December 2025",
+                    "Full-time Software Engineering roles",
                     "AI/ML engineering positions and research opportunities",
                     "Open source collaboration and hackathon partnerships",
                     "Mentorship opportunities in tech and personal development",
@@ -1085,7 +1068,8 @@ export default function Home() {
             Rickny Sanon
           </span>
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-            © 2025 · AI Software Engineer & Full-Stack Developer
+            © {new Date().getFullYear()} · AI Software Engineer & Full-Stack
+            Developer
           </p>
           <div className="flex gap-4">
             {[
@@ -1097,14 +1081,7 @@ export default function Home() {
                 key={href}
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
-                className="transition-colors duration-200"
-                style={{ color: "var(--text-muted)" }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--accent)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")
-                }
+                className="link-muted"
               >
                 <Icon className="w-4 h-4" />
               </Link>
@@ -1113,5 +1090,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
+    </MotionConfig>
   );
 }

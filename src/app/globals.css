@@ -16,6 +16,8 @@ html {
   --accent: #8b6530;
   --accent-light: #c9a96e;
   --accent-bright: #e8c98a;
+  --tint-blue: #5a6fd6;
+  --tint-green: #2f9e77;
   --nav-bg: rgba(249, 246, 241, 0.92);
 }
 
@@ -31,7 +33,14 @@ html {
   --accent: #c9a96e;
   --accent-light: #dfc080;
   --accent-bright: #eedda8;
+  --tint-blue: #7b9cff;
+  --tint-green: #6ee7b7;
   --nav-bg: rgba(7, 8, 16, 0.92);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+  color: var(--text-primary);
 }
 
 /* ── Base ─────────────────────────────────────────────── */
@@ -98,7 +107,71 @@ body {
 
 .card:hover {
   border-color: var(--accent);
-  box-shadow: 0 0 40px rgba(201, 169, 110, 0.07);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  color: var(--text-primary);
+  transition: color 0.2s ease;
+}
+
+.card:hover .card-title {
+  color: var(--accent);
+}
+
+/* ── Links & Buttons ──────────────────────────────────── */
+.link-nav {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.link-muted {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.link-nav:hover,
+.link-muted:hover {
+  color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.btn-outline {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.icon-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
 }
 
 /* ── Skill badges ─────────────────────────────────────── */
@@ -142,6 +215,21 @@ button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* ── Reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 /* ── Subtle grain overlay ─────────────────────────────── */
