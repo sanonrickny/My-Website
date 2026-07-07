@@ -538,7 +538,7 @@ export default function Home() {
               {[
                 {
                   title: "Languages & Frameworks",
-                  dot: "#c9a96e",
+                  dot: "var(--accent)",
                   tags: [
                     "Python",
                     "Java",
@@ -553,7 +553,7 @@ export default function Home() {
                 },
                 {
                   title: "AI & Dev Tools",
-                  dot: "#7b9cff",
+                  dot: "var(--tint-blue)",
                   tags: [
                     "Claude LLM",
                     "AWS Bedrock",
@@ -567,7 +567,7 @@ export default function Home() {
                 },
                 {
                   title: "Cloud & Databases",
-                  dot: "#6ee7b7",
+                  dot: "var(--tint-green)",
                   tags: [
                     "AWS",
                     "SQLite",
@@ -610,16 +610,21 @@ export default function Home() {
               className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4"
             >
               {[
-                { icon: "🤖", title: "AI & Machine Learning", sub: "LLMs, NLP, PyTorch" },
-                { icon: "⚡", title: "Full-Stack Dev", sub: "React, Flask, APIs" },
-                { icon: "☁️", title: "Cloud & DevOps", sub: "AWS, Docker" },
-                { icon: "📊", title: "Data & Analytics", sub: "SQL, Dashboards" },
-              ].map(({ icon, title, sub }) => (
+                { Icon: Bot, title: "AI & Machine Learning", sub: "LLMs, NLP, PyTorch" },
+                { Icon: Zap, title: "Full-Stack Dev", sub: "React, Flask, APIs" },
+                { Icon: Cloud, title: "Cloud & DevOps", sub: "AWS, Docker" },
+                { Icon: BarChart3, title: "Data & Analytics", sub: "SQL, Dashboards" },
+              ].map(({ Icon, title, sub }) => (
                 <div
                   key={title}
                   className="card rounded-xl p-5 text-center"
                 >
-                  <div className="text-2xl mb-3">{icon}</div>
+                  <div className="flex justify-center mb-3">
+                    <Icon
+                      className="w-6 h-6"
+                      style={{ color: "var(--accent)" }}
+                    />
+                  </div>
                   <h4
                     className="text-xs font-semibold mb-1"
                     style={{ color: "var(--text-primary)" }}
@@ -710,18 +715,7 @@ export default function Home() {
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-6">
                     <div>
-                      <h3
-                        className="font-display font-semibold text-lg transition-colors duration-200"
-                        style={{ color: "var(--text-primary)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-primary)")
-                        }
-                      >
+                      <h3 className="card-title font-display font-semibold text-lg">
                         {role}
                       </h3>
                       <p
@@ -844,18 +838,7 @@ export default function Home() {
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1 min-w-0">
-                      <h3
-                        className="font-display font-semibold text-lg transition-colors duration-200"
-                        style={{ color: "var(--text-primary)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-primary)")
-                        }
-                      >
+                      <h3 className="card-title font-display font-semibold text-lg">
                         {name}
                       </h3>
                       <p
@@ -875,16 +858,8 @@ export default function Home() {
                       <Link
                         href={link}
                         target="_blank"
-                        className="ml-4 flex-shrink-0 mt-0.5 transition-colors duration-200"
-                        style={{ color: "var(--text-muted)" }}
-                        onMouseEnter={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--accent)")
-                        }
-                        onMouseLeave={(e) =>
-                          ((e.currentTarget as HTMLElement).style.color =
-                            "var(--text-muted)")
-                        }
+                        className="link-muted ml-4 flex-shrink-0 mt-0.5"
+                        aria-label={`Open ${name} (new tab)`}
                       >
                         <ExternalLink className="w-5 h-5" />
                       </Link>
@@ -979,19 +954,7 @@ export default function Home() {
                         />
                       </div>
                       {href ? (
-                        <Link
-                          href={href}
-                          className="text-sm transition-colors duration-200"
-                          style={{ color: "var(--text-secondary)" }}
-                          onMouseEnter={(e) =>
-                            ((e.currentTarget as HTMLElement).style.color =
-                              "var(--accent)")
-                          }
-                          onMouseLeave={(e) =>
-                            ((e.currentTarget as HTMLElement).style.color =
-                              "var(--text-secondary)")
-                          }
-                        >
+                        <Link href={href} className="link-nav text-sm">
                           {label}
                         </Link>
                       ) : (
@@ -1033,22 +996,7 @@ export default function Home() {
                       key={href}
                       href={href}
                       target={href.startsWith("mailto") ? undefined : "_blank"}
-                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
-                      style={{
-                        background: "var(--card)",
-                        border: "1px solid var(--border)",
-                        color: "var(--text-secondary)",
-                      }}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.borderColor = "var(--accent)";
-                        el.style.color = "var(--accent)";
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.borderColor = "var(--border)";
-                        el.style.color = "var(--text-secondary)";
-                      }}
+                      className="icon-btn w-10 h-10 rounded-xl flex items-center justify-center"
                     >
                       <Icon className="w-4 h-4" />
                     </Link>
@@ -1065,7 +1013,7 @@ export default function Home() {
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Full-time Software Engineering roles starting December 2025",
+                    "Full-time Software Engineering roles",
                     "AI/ML engineering positions and research opportunities",
                     "Open source collaboration and hackathon partnerships",
                     "Mentorship opportunities in tech and personal development",
@@ -1105,7 +1053,8 @@ export default function Home() {
             Rickny Sanon
           </span>
           <p className="text-sm" style={{ color: "var(--text-muted)" }}>
-            © 2025 · AI Software Engineer & Full-Stack Developer
+            © {new Date().getFullYear()} · AI Software Engineer & Full-Stack
+            Developer
           </p>
           <div className="flex gap-4">
             {[
@@ -1117,14 +1066,7 @@ export default function Home() {
                 key={href}
                 href={href}
                 target={href.startsWith("mailto") ? undefined : "_blank"}
-                className="transition-colors duration-200"
-                style={{ color: "var(--text-muted)" }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--accent)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")
-                }
+                className="link-muted"
               >
                 <Icon className="w-4 h-4" />
               </Link>
