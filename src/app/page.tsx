@@ -10,8 +10,14 @@ import {
   MapPin,
   Copy,
   Check,
+  Menu,
+  X,
+  Bot,
+  Zap,
+  Cloud,
+  BarChart3,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-provider";
 import { TypewriterEffect } from "@/components/typewriter-effect";
 
@@ -55,8 +61,11 @@ function SectionLabel({ num, title }: { num: string; title: string }) {
 }
 
 /* ── Main Page ──────────────────────────────────────── */
+const NAV_LINKS = ["About", "Experience", "Projects", "Contact"];
+
 export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   function copyEmail() {
     navigator.clipboard.writeText("sanonrickny2@gmail.com").then(() => {
@@ -66,44 +75,68 @@ export default function Home() {
   }
 
   return (
+    <MotionConfig reducedMotion="user">
     <main style={{ backgroundColor: "var(--bg)", color: "var(--text-primary)" }}>
       {/* ── Navigation ──────────────────────────────── */}
       <nav className="fixed top-0 w-full glass-nav z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-<Link
-  href="/"
-  className="logo-text font-display"
-  style={{ color: "var(--text-primary)" }}
->
-  <span className="initial" aria-hidden="true">
-    R
-  </span>
-  <span className="initial" aria-hidden="true">
-    S
-  </span>
-</Link>
+          <Link
+            href="/"
+            className="logo-text font-display"
+            style={{ color: "var(--text-primary)" }}
+          >
+            <span className="initial" aria-hidden="true">
+              R
+            </span>
+            <span className="initial" aria-hidden="true">
+              S
+            </span>
+            <span className="sr-only">Rickny Sanon — home</span>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {["About", "Experience", "Projects", "Contact"].map((item) => (
+            {NAV_LINKS.map((item) => (
               <Link
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-sm tracking-wide transition-colors duration-200"
-                style={{ color: "var(--text-secondary)" }}
-                onMouseEnter={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--accent)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.target as HTMLElement).style.color = "var(--text-secondary)")
-                }
+                className="link-nav text-sm tracking-wide"
               >
                 {item}
               </Link>
             ))}
           </div>
 
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="icon-btn md:hidden w-10 h-10 rounded-full flex items-center justify-center"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
+
+        {menuOpen && (
+          <div
+            className="md:hidden px-6 pb-5 flex flex-col gap-1"
+            style={{ borderTop: "1px solid var(--border)" }}
+          >
+            {NAV_LINKS.map((item) => (
+              <Link
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className="link-nav py-3 text-sm tracking-wide"
+                style={{ borderBottom: "1px solid var(--border)" }}
+              >
+                {item}
+              </Link>
+            ))}
+          </div>
+        )}
       </nav>
 
       {/* ── Hero ────────────────────────────────────── */}
@@ -1113,5 +1146,6 @@ export default function Home() {
         </div>
       </footer>
     </main>
+    </MotionConfig>
   );
 }

@@ -30,20 +30,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300"
-      style={{
-        border: "1px solid var(--border)",
-        background: "var(--card)",
-        color: "var(--text-secondary)",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--accent)";
-        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--accent)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
-        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
-      }}
+      className="icon-btn w-10 h-10 rounded-full flex items-center justify-center"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? (
