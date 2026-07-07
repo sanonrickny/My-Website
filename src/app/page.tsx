@@ -106,13 +106,15 @@ export default function Home() {
 
           <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((item) => (
-              <Link
+              // ponytail: plain <a> for same-page hash links — Next Link's
+              // scroll handling breaks when onClick unmounts the element
+              <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
                 className="link-nav text-sm tracking-wide"
               >
                 {item}
-              </Link>
+              </a>
             ))}
           </div>
 
@@ -132,10 +134,13 @@ export default function Home() {
         {menuOpen && (
           <div
             className="md:hidden px-6 pb-5 flex flex-col gap-1"
-            style={{ borderTop: "1px solid var(--border)" }}
+            style={{
+              borderTop: "1px solid var(--border)",
+              background: "var(--bg)",
+            }}
           >
             {NAV_LINKS.map((item) => (
-              <Link
+              <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
                 onClick={() => setMenuOpen(false)}
@@ -143,7 +148,7 @@ export default function Home() {
                 style={{ borderBottom: "1px solid var(--border)" }}
               >
                 {item}
-              </Link>
+              </a>
             ))}
           </div>
         )}
