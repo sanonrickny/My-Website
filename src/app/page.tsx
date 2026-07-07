@@ -67,11 +67,21 @@ export default function Home() {
   const [emailCopied, setEmailCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  function copyEmail() {
-    navigator.clipboard.writeText("sanonrickny2@gmail.com").then(() => {
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2000);
-    });
+  async function copyEmail() {
+    const email = "sanonrickny2@gmail.com";
+    try {
+      await navigator.clipboard.writeText(email);
+    } catch {
+      // Fallback for contexts where the Clipboard API is unavailable
+      const ta = document.createElement("textarea");
+      ta.value = email;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
   }
 
   return (
