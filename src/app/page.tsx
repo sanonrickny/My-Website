@@ -192,28 +192,6 @@ export default function Home() {
             animate="visible"
             className="z-10"
           >
-            <motion.div
-              variants={fadeUp}
-              className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full text-xs tracking-[0.18em] uppercase font-medium"
-              style={{
-                border: "1px solid var(--border)",
-                background: "var(--card)",
-                color: "var(--accent)",
-              }}
-            >
-              <span className="relative flex h-2 w-2">
-                <span
-                  className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
-                  style={{ background: "var(--tint-green)" }}
-                />
-                <span
-                  className="relative inline-flex rounded-full h-2 w-2"
-                  style={{ background: "var(--tint-green)" }}
-                />
-              </span>
-              Open to new opportunities
-            </motion.div>
-
             <motion.h1
               variants={fadeUp}
               className="font-display font-bold leading-none mb-8"
